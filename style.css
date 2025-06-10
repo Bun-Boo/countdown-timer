@@ -480,6 +480,7 @@ body::-webkit-scrollbar {
     transform: translateY(-2px);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
     opacity: 1;
+    color: #fff;
 }
 
 .ambient-btn.active {
@@ -490,10 +491,22 @@ body::-webkit-scrollbar {
         0 0 30px rgba(81, 207, 102, 0.3);
     opacity: 1;
     transform: translateY(-2px);
+    color: #ffffff;
 }
 
 .ambient-btn.active:hover {
     background: linear-gradient(145deg, #5c940d, #51cf66);
+    color: #ffffff;
+}
+
+.ambient-btn.active .icon,
+.ambient-btn.active .label {
+    color: #ffffff;
+}
+
+.ambient-btn.active:hover .icon,
+.ambient-btn.active:hover .label {
+    color: #ffffff;
 }
 
 .ambient-btn .icon {
@@ -502,12 +515,14 @@ body::-webkit-scrollbar {
     align-items: center;
     justify-content: center;
     min-width: 20px;
+    color: inherit;
 }
 
 .ambient-btn .label {
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.5px;
+    color: inherit;
 }
 
 /* Close Button */

@@ -7,6 +7,7 @@ class FlipClockTimer {
         this.currentMode = 'work'; // 'work', 'break', 'longBreak'
         this.sessionCount = 1;
         this.totalSessions = 0;
+        this.autoStartTimeout = null; // Track auto-start timeout
 
         // Animation state tracking - simplified
         this.isAnimating = {
@@ -323,6 +324,13 @@ class FlipClockTimer {
         this.isPaused = true;
         this.isRunning = false;
         clearInterval(this.timerInterval);
+        
+        // Clear any pending auto-start timeout
+        if (this.autoStartTimeout) {
+            clearTimeout(this.autoStartTimeout);
+            this.autoStartTimeout = null;
+        }
+        
         this.updateButtonStates();
     }
 
@@ -330,6 +338,12 @@ class FlipClockTimer {
         this.isRunning = false;
         this.isPaused = false;
         clearInterval(this.timerInterval);
+        
+        // Clear any pending auto-start timeout
+        if (this.autoStartTimeout) {
+            clearTimeout(this.autoStartTimeout);
+            this.autoStartTimeout = null;
+        }
         
         // Set time based on current mode
         if (this.currentMode === 'work') {
@@ -342,17 +356,36 @@ class FlipClockTimer {
 
         this.updateDisplay();
         this.updateButtonStates();
+        this.updateModeDisplay();
         this.initializeCards();
     }
 
     skipSession() {
+        console.log('⏭️ Manual skip triggered');
+        
+        // Clear any pending auto-start timeout to prevent race conditions
+        if (this.autoStartTimeout) {
+            clearTimeout(this.autoStartTimeout);
+            this.autoStartTimeout = null;
+            console.log('🛑 Cleared pending auto-start timeout');
+        }
+        
         this.timerComplete();
     }
 
     timerComplete() {
+        console.log('⏰ Timer completed');
+        
         this.isRunning = false;
         this.isPaused = false;
         clearInterval(this.timerInterval);
+        
+        // Clear any existing auto-start timeout
+        if (this.autoStartTimeout) {
+            clearTimeout(this.autoStartTimeout);
+            this.autoStartTimeout = null;
+            console.log('🛑 Cleared existing auto-start timeout');
+        }
         
         // Play notification sound
         this.playNotification();
@@ -363,16 +396,22 @@ class FlipClockTimer {
         // Switch modes
         this.switchMode();
         
-        // Auto-start timer for the new mode
-        setTimeout(() => {
-            this.startTimer();
-        }, 1000); // Small delay to allow notifications to show
-        
+        // Update button states and display
         this.updateButtonStates();
         this.updateDisplay();
+        
+        // Auto-start timer for the new mode
+        console.log('⏳ Scheduling auto-start in 1 second...');
+        this.autoStartTimeout = setTimeout(() => {
+            this.autoStartTimeout = null; // Clear reference when timeout executes
+            console.log('🚀 Auto-starting timer');
+            this.startTimer();
+        }, 1000); // Small delay to allow notifications to show
     }
 
     switchMode() {
+        console.log(`🔄 Switching from ${this.currentMode}...`);
+        
         if (this.currentMode === 'work') {
             this.totalSessions++;
             
@@ -470,6 +509,8 @@ class FlipClockTimer {
                 break;
         }
 
+        console.log(`🔄 Mode changed to: ${this.currentMode} (${modeClass})`);
+        
         this.currentModeElement.textContent = modeText;
         this.currentModeElement.className = `mode-indicator ${modeClass}`;
         this.sessionCountElement.textContent = `Phiên: ${this.sessionCount}`;
@@ -1031,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         if (timer.isRunning) {
             const modeText = timer.currentMode === 'work' ? '💼 Làm việc' : '☕ Nghỉ ngơi';
-            document.title = `${timer.formatTimeForTitle()} - ${modeText} | Fliqlo Timer`;
+            document.title = `${timer.formatTimeForTitle()} - ${modeText} | Hai.pt`;
         } else {
             document.title = 'Thời gian đang dừng - Tiếp tục làm việc nào !!!';
         }
