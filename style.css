@@ -22,6 +22,11 @@ body {
     color: #fff;
     overflow: hidden;
     position: relative;
+    /* Disable iOS zoom on double tap */
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body::-webkit-scrollbar {
@@ -35,6 +40,7 @@ body::-webkit-scrollbar {
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 10px;
 }
 
 /* Clock Wrapper - Full Screen */
@@ -45,6 +51,7 @@ body::-webkit-scrollbar {
     justify-content: center;
     width: 100%;
     height: 100%;
+    max-width: 100%;
 }
 
 /* Flip Clock Container - Centered and Large */
@@ -53,6 +60,8 @@ body::-webkit-scrollbar {
     gap: 60px;
     justify-content: center;
     align-items: center;
+    flex-wrap: nowrap;
+    max-width: 100%;
 }
 
 .time-section {
@@ -60,6 +69,9 @@ body::-webkit-scrollbar {
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    min-width: 0;
+    flex: 1;
+    max-width: 380px;
 }
 
 /* Time Separator - Colon */
@@ -76,6 +88,7 @@ body::-webkit-scrollbar {
     height: 100%;
     justify-content: center;
     margin-bottom: 60px;
+    flex: 0 0 auto;
 }
 
 /* Number Card - Beautiful Scale Animation */
@@ -86,6 +99,8 @@ body::-webkit-scrollbar {
     perspective: 1000px;
     border-radius: 25px;
     overflow: hidden;
+    max-width: 100%;
+    aspect-ratio: 380/480;
 }
 
 .card-content {
@@ -203,6 +218,7 @@ body::-webkit-scrollbar {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
     min-width: 280px;
     z-index: 1000;
+    max-width: calc(100vw - 80px);
 }
 
 .mode-indicator,
@@ -238,8 +254,8 @@ body::-webkit-scrollbar {
     border: 2px solid rgba(255, 255, 255, 0.1);
     width: 90%;
     max-width: 550px;
-    max-height: none; /* Remove height limit */
-    overflow: visible; /* Remove scrollbar */
+    max-height: 90vh;
+    overflow-y: auto;
     z-index: 2000;
     opacity: 0;
     visibility: hidden;
@@ -423,17 +439,18 @@ body::-webkit-scrollbar {
     position: fixed;
     top: 40px;
     left: 40px;
-    background: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
     width: 60px;
     height: 60px;
-    color: #fff;
+    border: none;
+    border-radius: 50%;
+    background: rgba(30, 30, 30, 0.9);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
     font-size: 1.5rem;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -442,37 +459,69 @@ body::-webkit-scrollbar {
 
 .settings-btn:hover {
     background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+}
+
+/* Help Button */
+.help-btn {
+    position: fixed;
+    top: 120px;
+    left: 40px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(30, 30, 30, 0.9);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
     transform: translateY(-2px);
 }
 
 /* Ambient Sound Controls */
 .ambient-controls {
     position: fixed;
-    top: 40px;
-    left: 200px;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: row;
-    gap: 15px;
+    gap: 20px;
     z-index: 1000;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: calc(100vw - 80px);
 }
 
 .ambient-btn {
-    background: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(15px);
+    background: rgba(30, 30, 30, 0.9);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 12px 16px;
-    color: #fff;
+    padding: 15px 20px;
+    color: #ffffff;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    min-width: 100px;
-    opacity: 0.7;
+    gap: 8px;
+    min-width: 80px;
+    max-width: 100px;
 }
 
 .ambient-btn:hover {
@@ -571,181 +620,810 @@ body::-webkit-scrollbar {
     visibility: visible;
 }
 
-/* Responsive Design */
+/* Enhanced responsive breakpoints */
+
+/* Large tablets and small laptops */
 @media (max-width: 1200px) {
     .flip-clock {
         gap: 40px;
     }
-    
+
     .number-card {
         width: 320px;
         height: 400px;
     }
-    
+
     .number {
         font-size: 8rem;
+        letter-spacing: -6px;
     }
-    
+
     .time-separator {
-        font-size: 6rem;
-        height: 400px; /* Match smaller card height */
+        font-size: 5rem;
+        margin-bottom: 50px;
     }
-    
+
+    .status-display {
+        top: 30px;
+        right: 30px;
+        min-width: 240px;
+        padding: 20px 25px;
+    }
+
+    .settings-btn,
+    .help-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+    }
+
+    .settings-btn {
+        top: 30px;
+        left: 30px;
+    }
+
+    .help-btn {
+        top: 100px;
+        left: 30px;
+    }
+
     .ambient-controls {
-        left: 180px; /* Adjust for smaller screen but keep space for help button */
-        gap: 12px;
+        bottom: 30px;
+        gap: 15px;
     }
-    
+
     .ambient-btn {
-        min-width: 100px;
-        padding: 10px 14px;
+        min-width: 75px;
+        max-width: 90px;
+        padding: 12px 16px;
     }
-    
+
     .ambient-btn .label {
         font-size: 0.8rem;
     }
 }
 
-@media (max-width: 768px) {
+/* iPad Portrait and similar tablets */
+@media (max-width: 1024px) {
     .flip-clock {
         gap: 30px;
-        flex-direction: column;
     }
-    
-    .time-separator {
-        display: none; /* Hide colons in mobile vertical layout */
-        height: auto;
-    }
-    
+
     .number-card {
         width: 280px;
         height: 350px;
     }
-    
+
     .number {
         font-size: 7rem;
+        letter-spacing: -5px;
     }
-    
-    .time-label {
-        font-size: 1.2rem;
-    }
-    
-    .status-display {
-        top: 20px;
-        right: 20px;
-        padding: 20px;
-        min-width: 220px;
-    }
-    
-    .settings-btn {
-        top: 20px;
-        left: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-    
-    .help-btn {
-        top: 20px;
-        left: 80px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-    
-    .ambient-controls {
-        top: 80px; /* Move below settings button on mobile */
-        left: 20px;
-        flex-wrap: wrap; /* Allow wrapping */
-        max-width: calc(100vw - 40px); /* Prevent overflow */
-    }
-    
-    .ambient-btn {
-        min-width: 90px;
-        padding: 8px 12px;
-    }
-    
-    .ambient-btn .icon {
-        font-size: 1rem;
-    }
-    
-    .ambient-btn .label {
-        font-size: 0.75rem;
-    }
-    
-    .controls-panel {
-        padding: 30px;
-        width: 95%;
-    }
-    
-    .youtube-popup {
-        padding: 30px;
-        width: 95%;
-    }
-    
-    .suggestion-buttons {
-        grid-template-columns: 1fr;
-    }
-}
 
-@media (max-width: 480px) {
-    .flip-clock {
-        gap: 20px;
+    .time-separator {
+        font-size: 4.5rem;
+        margin-bottom: 40px;
     }
-    
-    .number-card {
-        width: 240px;
-        height: 300px;
-    }
-    
-    .number {
-        font-size: 5.5rem;
-        letter-spacing: -4px;
-    }
-    
+
     .time-label {
-        font-size: 1rem;
-        letter-spacing: 2px;
+        font-size: 1.2rem;
+        letter-spacing: 3px;
     }
-    
+
     .status-display {
-        position: relative;
-        top: auto;
-        right: auto;
-        margin-bottom: 20px;
+        min-width: 220px;
+        padding: 18px 22px;
+        gap: 12px;
     }
-    
+
     .mode-indicator,
     .session-counter {
         font-size: 1rem;
     }
-    
+
+    .controls-panel {
+        padding: 40px;
+        max-width: 500px;
+    }
+
+    .youtube-popup {
+        padding: 40px;
+        max-width: 500px;
+    }
+
+    .shortcuts-popup {
+        padding: 40px;
+        max-width: 500px;
+    }
+}
+
+/* iPad Landscape and small tablets */
+@media (max-width: 900px) and (orientation: landscape) {
+    .flip-clock {
+        gap: 25px;
+    }
+
+    .number-card {
+        width: 240px;
+        height: 300px;
+    }
+
+    .number {
+        font-size: 5.5rem;
+        letter-spacing: -4px;
+    }
+
+    .time-separator {
+        font-size: 3.5rem;
+        margin-bottom: 30px;
+    }
+
+    .time-section {
+        gap: 20px;
+    }
+
+    .time-label {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .status-display {
+        top: 20px;
+        right: 20px;
+        min-width: 200px;
+        padding: 15px 18px;
+        gap: 10px;
+    }
+
+    .settings-btn,
+    .help-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .settings-btn {
+        top: 20px;
+        left: 20px;
+    }
+
+    .help-btn {
+        top: 80px;
+        left: 20px;
+    }
+
     .ambient-controls {
-        position: relative;
-        top: auto;
-        left: auto;
-        justify-content: center;
-        margin-bottom: 20px;
-        max-width: 100%;
+        bottom: 20px;
+        gap: 12px;
     }
-    
+
     .ambient-btn {
-        min-width: 70px;
-        padding: 6px 8px;
-        flex: 1;
-        max-width: 90px;
+        min-width: 65px;
+        max-width: 80px;
+        padding: 10px 12px;
     }
-    
+
+    .ambient-btn .icon {
+        font-size: 1.2rem;
+    }
+
     .ambient-btn .label {
         font-size: 0.7rem;
     }
-    
-    .controls-panel {
-        padding: 25px;
+}
+
+/* Large mobile phones and small tablets */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .flip-clock {
+        gap: 15px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        flex-wrap: nowrap;
+    }
+
+    .time-separator {
+        font-size: 2.5rem;
+        margin-bottom: 0;
+        transform: none;
+        margin: 0;
+        display: flex !important;
+        visibility: visible !important;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+    }
+
+    .time-section {
+        gap: 12px;
+        width: auto;
+        max-width: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Ensure all time sections are visible and properly ordered */
+    .time-section:nth-child(1) { /* Hours */
+        order: 1;
     }
     
+    .time-section:nth-child(3) { /* Minutes */ 
+        order: 3;
+    }
+    
+    .time-section:nth-child(5) { /* Seconds */
+        order: 5;
+    }
+    
+    .time-separator:nth-child(2) { /* First colon */
+        order: 2;
+    }
+    
+    .time-separator:nth-child(4) { /* Second colon */
+        order: 4;
+    }
+
+    .number-card {
+        width: min(200px, calc((100vw - 100px) / 3));
+        height: min(250px, calc(((100vw - 100px) / 3) * 250/200));
+        display: block;
+        visibility: visible;
+    }
+
+    .number {
+        font-size: 4rem;
+        letter-spacing: -3px;
+    }
+
+    .time-label {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .status-display {
+        top: 15px;
+        right: 15px;
+        left: auto;
+        min-width: 180px;
+        padding: 12px 15px;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .mode-indicator,
+    .session-counter {
+        font-size: 0.9rem;
+    }
+
+    .settings-btn {
+        top: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+
+    .help-btn {
+        top: 70px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+
+    .ambient-controls {
+        bottom: 15px;
+        gap: 8px;
+        flex-wrap: wrap;
+        max-width: calc(100vw - 30px);
+    }
+
+    .ambient-btn {
+        min-width: 50px;
+        max-width: 60px;
+        padding: 6px 8px;
+        border-radius: 10px;
+    }
+
+    .ambient-btn .icon {
+        font-size: 1rem;
+    }
+
+    .ambient-btn .label {
+        font-size: 0.6rem;
+    }
+
+    .controls-panel {
+        padding: 30px 25px;
+        width: 95%;
+        max-width: 400px;
+        max-height: 85vh;
+    }
+
+    .youtube-popup {
+        padding: 30px 25px;
+        width: 95%;
+        max-width: 400px;
+        max-height: 85vh;
+    }
+
+    .shortcuts-popup {
+        padding: 30px 25px;
+        width: 95%;
+        max-width: 400px;
+        max-height: 85vh;
+    }
+
     .timer-settings h3 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        font-size: 0.9rem;
+    }
+
+    .input-group input[type="number"] {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .control-buttons {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        min-width: 80px;
+    }
+
+    .shortcuts-grid {
+        gap: 8px;
+    }
+
+    .shortcut-item {
+        padding: 8px 12px;
+    }
+
+    .shortcut-item .key {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+        min-width: 35px;
+    }
+
+    .shortcut-item .description {
+        font-size: 0.8rem;
+    }
+}
+
+/* Mobile phones - Portrait */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .clock-wrapper {
+        height: auto;
+        min-height: 100%;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .flip-clock {
+        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        flex-wrap: nowrap;
+    }
+
+    /* Ensure proper ordering and visibility */
+    .time-section {
+        gap: 8px;
+        width: auto;
+        max-width: none;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        visibility: visible !important;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .time-section:nth-child(1) { /* Hours */
+        order: 1;
+    }
+    
+    .time-section:nth-child(3) { /* Minutes */ 
+        order: 3;
+    }
+    
+    .time-section:nth-child(5) { /* Seconds */
+        order: 5;
+    }
+    
+    .time-separator:nth-child(2) { /* First colon */
+        order: 2;
+    }
+    
+    .time-separator:nth-child(4) { /* Second colon */
+        order: 4;
+    }
+
+    .number-card {
+        width: min(160px, calc((100vw - 80px) / 3));
+        height: min(200px, calc(((100vw - 80px) / 3) * 200/160));
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .number {
+        font-size: 3rem;
+        letter-spacing: -2px;
+    }
+
+    .time-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+
+    .time-separator {
+        font-size: 2rem;
+        margin: 0;
+        transform: none;
+        display: flex !important;
+        visibility: visible !important;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+    }
+
+    .status-display {
+        top: 10px;
+        right: 10px;
+        min-width: 160px;
+        padding: 10px 12px;
+        gap: 6px;
+        border-radius: 15px;
+    }
+
+    .mode-indicator,
+    .session-counter {
+        font-size: 0.8rem;
+    }
+
+    .settings-btn {
+        top: 10px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .help-btn {
+        top: 60px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .ambient-controls {
+        bottom: 10px;
+        gap: 6px;
+        max-width: calc(100vw - 20px);
+        justify-content: center;
+    }
+
+    .ambient-btn {
+        min-width: 45px;
+        max-width: 55px;
+        padding: 5px 6px;
+        border-radius: 8px;
+        gap: 3px;
+    }
+
+    .ambient-btn .icon {
+        font-size: 0.9rem;
+    }
+
+    .ambient-btn .label {
+        font-size: 0.55rem;
+        line-height: 1;
+    }
+
+    .controls-panel {
+        padding: 20px;
+        width: 98%;
+        max-width: 350px;
+        max-height: 90vh;
+        border-radius: 20px;
+    }
+
+    .youtube-popup {
+        padding: 20px;
+        width: 98%;
+        max-width: 350px;
+        max-height: 90vh;
+        border-radius: 20px;
+    }
+
+    .shortcuts-popup {
+        padding: 20px;
+        width: 98%;
+        max-width: 350px;
+        max-height: 90vh;
+        border-radius: 20px;
+    }
+
+    .timer-settings h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .input-group {
+        margin-bottom: 12px;
+    }
+
+    .input-group label {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .input-group input[type="number"] {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .control-buttons {
+        gap: 8px;
+        margin: 15px 0;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        min-width: 70px;
+        border-radius: 8px;
+    }
+
+    .volume-control {
+        margin-top: 15px;
+    }
+
+    .volume-control label {
+        font-size: 0.8rem;
+    }
+
+    .shortcuts-grid {
+        gap: 6px;
+    }
+
+    .shortcut-item {
+        padding: 6px 10px;
+    }
+
+    .shortcut-item .key {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        min-width: 30px;
+        border-radius: 4px;
+    }
+
+    .shortcut-item .description {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+
+    .shortcuts-note {
+        margin-top: 15px;
+    }
+
+    .shortcuts-note p {
+        font-size: 0.75rem;
+    }
+
+    .popup-content h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .popup-content p {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .popup-content .input-group input {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    .suggestion-buttons {
+        gap: 6px;
+    }
+
+    .suggestion-btn {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Very small mobile phones */
+@media (max-width: 360px) {
+    .flip-clock {
+        gap: 10px;
+    }
+
+    .number-card {
+        width: min(200px, calc(100vw - 40px));
+        height: min(250px, calc((100vw - 40px) * 250/200));
+    }
+
+    .number {
+        font-size: 3.5rem;
+        letter-spacing: -2px;
+    }
+
+    .time-label {
+        font-size: 0.9rem;
+    }
+
+    .time-separator {
+        font-size: 2rem;
+    }
+
+    .status-display {
+        min-width: 140px;
+        padding: 8px 10px;
+    }
+
+    .mode-indicator,
+    .session-counter {
+        font-size: 0.75rem;
+    }
+
+    .ambient-btn {
+        min-width: 45px;
+        max-width: 55px;
+        padding: 5px 6px;
+    }
+
+    .ambient-btn .icon {
+        font-size: 0.9rem;
+    }
+
+    .ambient-btn .label {
+        font-size: 0.55rem;
+    }
+
+    .controls-panel,
+    .youtube-popup,
+    .shortcuts-popup {
+        padding: 15px;
+        width: 99%;
+        max-width: 320px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .container {
+        padding: 10px;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .clock-wrapper {
+        height: auto;
+        min-height: 100%;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .flip-clock {
+        flex-direction: row;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Ensure all time sections are visible in landscape */
+    .time-section {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        visibility: visible !important;
+        flex: 1;
+        max-width: none;
+    }
+
+    .time-section:nth-child(1) { /* Hours */
+        order: 1;
+    }
+    
+    .time-section:nth-child(3) { /* Minutes */ 
+        order: 3;
+    }
+    
+    .time-section:nth-child(5) { /* Seconds */
+        order: 5;
+    }
+    
+    .time-separator:nth-child(2) { /* First colon */
+        order: 2;
+    }
+    
+    .time-separator:nth-child(4) { /* Second colon */
+        order: 4;
+    }
+
+    .time-separator {
+        transform: none;
+        margin: 0;
+        font-size: 3rem;
+        display: flex !important;
+        visibility: visible !important;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+    }
+
+    .number-card {
+        width: min(180px, calc((100vw - 120px) / 3));
+        height: min(220px, calc(((100vw - 120px) / 3) * 220/180));
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .number {
+        font-size: 3.5rem;
+    }
+
+    .time-label {
+        font-size: 0.8rem;
+    }
+
+    .status-display {
+        top: 10px;
+        right: 10px;
+        min-width: 140px;
+        padding: 8px 10px;
+    }
+
+    .ambient-controls {
+        bottom: 10px;
+        gap: 6px;
+    }
+
+    .ambient-btn {
+        min-width: 40px;
+        max-width: 50px;
+        padding: 4px 6px;
+    }
+
+    .ambient-btn .label {
+        font-size: 0.5rem;
     }
 }
 
@@ -872,35 +1550,6 @@ body::-webkit-scrollbar {
     font-weight: 600;
 }
 
-/* Help Button */
-.help-btn {
-    position: fixed;
-    top: 40px;
-    left: 120px;
-    width: 60px;
-    height: 60px;
-    background: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.help-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    transform: translateY(-2px);
-}
-
 /* Shortcuts Popup */
 .shortcuts-popup {
     position: fixed;
@@ -1006,4 +1655,81 @@ body::-webkit-scrollbar {
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0;
+}
+
+/* Enhanced mobile visibility fixes */
+@media (max-width: 768px) {
+    /* Force visibility of all time elements */
+    .flip-clock > * {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure proper spacing and layout for row */
+    .flip-clock {
+        min-height: auto;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+        flex-direction: row;
+    }
+    
+    /* Make sure each time section takes up proper space */
+    .time-section {
+        flex-shrink: 0;
+        min-height: auto;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    /* Adjust separator spacing for row layout */
+    .time-separator {
+        flex-shrink: 0;
+        min-height: auto;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Additional mobile phone specific fixes for row layout */
+    .flip-clock {
+        min-height: auto;
+        justify-content: center;
+        padding: 20px 0;
+        flex-direction: row;
+    }
+    
+    .time-section {
+        min-height: auto;
+        margin: 0;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .time-separator {
+        min-height: auto;
+        margin: 0;
+        flex: 0 0 auto;
+        transform: none;
+    }
+}
+
+/* Force all elements to be visible on any mobile device */
+@media (max-width: 768px) {
+    #hours, #minutes, #seconds {
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .time-section:nth-child(1),
+    .time-section:nth-child(3), 
+    .time-section:nth-child(5) {
+        display: flex !important;
+        visibility: visible !important;
+    }
 } 
