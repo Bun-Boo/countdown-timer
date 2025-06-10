@@ -960,7 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const modeText = timer.currentMode === 'work' ? '💼 Làm việc' : '☕ Nghỉ ngơi';
             document.title = `${timer.formatTimeForTitle()} - ${modeText} | Fliqlo Timer`;
         } else {
-            document.title = 'Fliqlo Flip Clock - Countdown Timer';
+            document.title = 'Thời gian đang dừng - Tiếp tục làm việc nào !!!';
         }
     }, 1000);
 
