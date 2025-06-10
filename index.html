@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đồng hồ đếm ngược - Hai.pt</title>
+    <link rel="icon" href="./clock.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Settings Button -->
+    <button class="settings-btn" id="settings-btn">⚙️</button>
+
+    <!-- Ambient Sound Controls -->
+    <div class="ambient-controls">
+        <button class="ambient-btn" id="rain-btn" data-sound="rain">
+            <span class="icon">🌧️</span>
+            <span class="label">Mưa</span>
+        </button>
+        <button class="ambient-btn" id="thunder-btn" data-sound="thunder">
+            <span class="icon">⛈️</span>
+            <span class="label">Sấm</span>
+        </button>
+        <button class="ambient-btn" id="birds-btn" data-sound="birds">
+            <span class="icon">🐦</span>
+            <span class="label">Chim</span>
+        </button>
+        <button class="ambient-btn" id="lofi-btn" data-sound="lofi">
+            <span class="icon">🎵</span>
+            <span class="label">Lofi</span>
+        </button>
+        <button class="ambient-btn" id="brainwave-btn" data-sound="brainwave">
+            <span class="icon">🧠</span>
+            <span class="label">Sóng não</span>
+        </button>
+    </div>
+
+    <!-- Status Display - Top Right -->
+    <div class="status-display">
+        <div id="current-mode" class="mode-indicator">Chế độ: Làm việc</div>
+        <div id="session-count" class="session-counter">Phiên: 1</div>
+    </div>
+
+    <div class="container">
+        <div class="clock-wrapper">
+            <!-- Timer Display -->
+            <div class="flip-clock">
+                <!-- Hours -->
+                <div class="time-section">
+                    <div class="number-card" id="hours">
+                        <div class="card-content">
+                            <span class="number">00</span>
+                        </div>
+                    </div>
+                    <div class="time-label">Giờ</div>
+                </div>
+
+                <!-- Colon Separator -->
+                <div class="time-separator">:</div>
+
+                <!-- Minutes -->
+                <div class="time-section">
+                    <div class="number-card" id="minutes">
+                        <div class="card-content">
+                            <span class="number">00</span>
+                        </div>
+                    </div>
+                    <div class="time-label">Phút</div>
+                </div>
+
+                <!-- Colon Separator -->
+                <div class="time-separator">:</div>
+
+                <!-- Seconds -->
+                <div class="time-section">
+                    <div class="number-card" id="seconds">
+                        <div class="card-content">
+                            <span class="number">00</span>
+                        </div>
+                    </div>
+                    <div class="time-label">Giây</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backdrop for popup -->
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- YouTube Link Popup -->
+    <div class="youtube-popup" id="youtube-popup">
+        <button class="close-btn" id="youtube-close-btn">×</button>
+        
+        <div class="popup-content">
+            <h3>🎵 Phát nhạc Lofi từ YouTube</h3>
+            <p>Dán link YouTube bất kỳ vào đây:</p>
+            
+            <div class="input-group">
+                <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." />
+                <button id="play-youtube-btn" class="btn btn-primary">Phát</button>
+            </div>
+            
+            <!-- <div class="suggestions">
+                <p>Hoặc chọn từ gợi ý:</p>
+                <div class="suggestion-buttons">
+                    <button class="suggestion-btn" data-url="https://www.youtube.com/watch?v=jfKfPfyJRdk">
+                        🎵 Lofi Hip Hop Radio
+                    </button>
+                    <button class="suggestion-btn" data-url="https://www.youtube.com/watch?v=5qap5aO4i9A">
+                        🌙 Chill Lofi Beats
+                    </button>
+                    <button class="suggestion-btn" data-url="https://www.youtube.com/watch?v=DWcJFNfaw9c">
+                        ☕ Study Lofi Music
+                    </button>
+                    <button class="suggestion-btn" data-url="https://www.youtube.com/watch?v=4xDzrJKXOOY">
+                        🌨️ Winter Lofi Vibes
+                    </button>
+                    <button class="suggestion-btn" data-url="https://www.youtube.com/watch?v=MCkOUpeie_M">
+                        🌸 Jazz Lofi Cafe
+                    </button>
+                </div>
+            </div> -->
+            
+            <div class="current-playing" id="current-playing" style="display: none;">
+                <p>🎶 Đang phát: <span id="current-title">...</span></p>
+                <button id="stop-music-btn" class="btn btn-tertiary">Dừng nhạc</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls Panel - Popup -->
+    <div class="controls-panel" id="controls-panel">
+        <button class="close-btn" id="close-btn">×</button>
+        
+        <div class="timer-settings">
+            <h3>Cài đặt Đồng hồ</h3>
+            <div class="input-group">
+                <label for="work-time">Thời gian làm việc (phút):</label>
+                <input type="number" id="work-time" value="25" min="1" max="120">
+            </div>
+            <div class="input-group">
+                <label for="break-time">Thời gian nghỉ ngắn (phút):</label>
+                <input type="number" id="break-time" value="5" min="1" max="30">
+            </div>
+            <div class="input-group">
+                <label for="long-break-time">Thời gian nghỉ dài (phút):</label>
+                <input type="number" id="long-break-time" value="15" min="1" max="60">
+            </div>
+            <div class="input-group">
+                <label for="sessions-before-long-break">Số phiên trước nghỉ dài:</label>
+                <input type="number" id="sessions-before-long-break" value="4" min="1" max="10">
+            </div>
+        </div>
+
+        <div class="control-buttons">
+            <button id="start-btn" class="btn btn-primary">Bắt đầu</button>
+            <button id="pause-btn" class="btn btn-secondary" disabled>Tạm dừng</button>
+            <button id="reset-btn" class="btn btn-tertiary">Đặt lại</button>
+            <button id="skip-btn" class="btn btn-skip">Bỏ qua</button>
+        </div>
+
+        <div class="volume-control">
+            <label for="volume">Âm lượng thông báo:</label>
+            <input type="range" id="volume" min="0" max="100" value="50">
+            <span id="volume-value">50%</span>
+        </div>
+    </div>
+
+    <!-- Audio for notifications -->
+    <audio id="notification-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmEcBzi6" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html> 
