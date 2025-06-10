@@ -97,6 +97,11 @@ class FlipClockTimer {
         this.currentPlaying = document.getElementById('current-playing');
         this.currentTitle = document.getElementById('current-title');
 
+        // Help/Shortcuts popup elements
+        this.helpBtn = document.getElementById('help-btn');
+        this.shortcutsPopup = document.getElementById('shortcuts-popup');
+        this.shortcutsCloseBtn = document.getElementById('shortcuts-close-btn');
+
         // Ambient sound buttons
         this.ambientButtons = {
             rain: document.getElementById('rain-btn'),
@@ -149,6 +154,7 @@ class FlipClockTimer {
         this.backdrop.addEventListener('click', () => {
             this.hideSettings();
             this.hideYouTubePopup();
+            this.hideShortcutsPopup();
         });
 
         // Volume control
@@ -189,15 +195,51 @@ class FlipClockTimer {
                     e.preventDefault();
                     this.skipSession();
                     break;
-                case 'Escape':
-                    e.preventDefault();
-                    this.hideSettings();
-                    this.hideYouTubePopup();
-                    break;
                 case 'KeyC':
                 case 'KeyP':
                     e.preventDefault();
                     this.showSettings();
+                    break;
+                case 'KeyH':
+                    e.preventDefault();
+                    this.showShortcutsPopup();
+                    break;
+                case 'KeyM':
+                    e.preventDefault();
+                    this.toggleAmbientSound('lofi');
+                    break;
+                case 'KeyF':
+                    e.preventDefault();
+                    this.toggleFullscreen();
+                    break;
+                case 'Digit1':
+                    e.preventDefault();
+                    this.toggleAmbientSound('rain');
+                    break;
+                case 'Digit2':
+                    e.preventDefault();
+                    this.toggleAmbientSound('thunder');
+                    break;
+                case 'Digit3':
+                    e.preventDefault();
+                    this.toggleAmbientSound('birds');
+                    break;
+                case 'Digit4':
+                    e.preventDefault();
+                    this.toggleAmbientSound('lofi');
+                    break;
+                case 'Digit5':
+                    e.preventDefault();
+                    this.toggleAmbientSound('brainwave');
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    this.hideSettings();
+                    this.hideYouTubePopup();
+                    this.hideShortcutsPopup();
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
                     break;
             }
         });
@@ -206,6 +248,10 @@ class FlipClockTimer {
         document.addEventListener('contextmenu', (e) => {
             e.preventDefault();
         });
+
+        // Help/Shortcuts popup controls
+        this.helpBtn.addEventListener('click', () => this.showShortcutsPopup());
+        this.shortcutsCloseBtn.addEventListener('click', () => this.hideShortcutsPopup());
     }
 
     showSettings() {
@@ -230,6 +276,28 @@ class FlipClockTimer {
         this.youtubePopup.classList.remove('active');
         this.backdrop.classList.remove('active');
         document.body.style.overflow = '';
+    }
+
+    showShortcutsPopup() {
+        this.shortcutsPopup.classList.add('active');
+        this.backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    hideShortcutsPopup() {
+        this.shortcutsPopup.classList.remove('active');
+        this.backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.log('Không hỗ trợ toàn màn hình:', err);
+            });
+        } else {
+            document.exitFullscreen();
+        }
     }
 
     startTimer() {
@@ -294,6 +362,11 @@ class FlipClockTimer {
 
         // Switch modes
         this.switchMode();
+        
+        // Auto-start timer for the new mode
+        setTimeout(() => {
+            this.startTimer();
+        }, 1000); // Small delay to allow notifications to show
         
         this.updateButtonStates();
         this.updateDisplay();
@@ -970,6 +1043,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('R: Đặt lại timer');
     console.log('S: Bỏ qua phiên hiện tại');
     console.log('C/P: Mở cài đặt');
+    console.log('H: Hiển thị phím tắt');
+    console.log('M: Bật/tắt nhạc Lofi');
+    console.log('F: Chế độ toàn màn hình');
+    console.log('1-5: Bật/tắt âm thanh môi trường');
     console.log('Escape: Đóng cài đặt');
     console.log('Double-click: Bật/tắt toàn màn hình');
 

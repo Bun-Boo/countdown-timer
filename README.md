@@ -21,6 +21,9 @@
 - **Audio Notifications** - Thông báo âm thanh tùy chỉnh
 - **Desktop Notifications** - Thông báo trên desktop
 - **Keyboard Shortcuts** - Điều khiển nhanh bằng phím tắt
+- **Shortcuts Helper** - Popup hiển thị tất cả phím tắt (nhấn `H`)
+- **Ambient Sounds** - Âm thanh môi trường: mưa, sấm, chim, lofi, sóng não
+- **Fullscreen Mode** - Chế độ toàn màn hình cho trải nghiệm tốt nhất
 
 ### ⚙️ Customization
 - Thời gian làm việc: `1-120 phút`
@@ -35,6 +38,15 @@
 | `Space` | Bắt đầu/Tạm dừng |
 | `R` | Đặt lại timer |
 | `S` | Bỏ qua phiên hiện tại |
+| `C/P` | Mở cài đặt |
+| `H` | Hiển thị popup phím tắt |
+| `M` | Bật/tắt nhạc Lofi |
+| `F` | Chế độ toàn màn hình |
+| `1-5` | Bật/tắt âm thanh môi trường |
+| `Escape` | Đóng popup / Thoát toàn màn hình |
+| `Double Click` | Bật/tắt toàn màn hình |
+
+> 💡 **Tip**: Nhấn `H` để xem popup phím tắt đầy đủ với giao diện đẹp!
 
 ## 🚀 Cài đặt & Sử dụng
 

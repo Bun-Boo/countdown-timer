@@ -3,6 +3,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Hide scrollbars globally */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+*::-webkit-scrollbar {
+    display: none; /* WebKit */
 }
 
 body {
@@ -15,6 +22,10 @@ body {
     color: #fff;
     overflow: hidden;
     position: relative;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* WebKit */
 }
 
 .container {
@@ -233,6 +244,9 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    /* Hide scrollbars */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .controls-panel.active {
@@ -427,16 +441,16 @@ body {
 }
 
 .settings-btn:hover {
-    background: rgba(50, 50, 50, 0.95);
-    transform: scale(1.1) rotate(45deg);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
 }
 
 /* Ambient Sound Controls */
 .ambient-controls {
     position: fixed;
     top: 40px;
-    left: 120px;
+    left: 200px;
     display: flex;
     flex-direction: row;
     gap: 15px;
@@ -457,7 +471,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    min-width: 120px;
+    min-width: 100px;
     opacity: 0.7;
 }
 
@@ -563,7 +577,7 @@ body {
     }
     
     .ambient-controls {
-        left: 110px; /* Adjust for smaller screen */
+        left: 180px; /* Adjust for smaller screen but keep space for help button */
         gap: 12px;
     }
     
@@ -611,6 +625,14 @@ body {
     .settings-btn {
         top: 20px;
         left: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .help-btn {
+        top: 20px;
+        left: 80px;
         width: 50px;
         height: 50px;
         font-size: 1.2rem;
@@ -721,15 +743,18 @@ body {
     background: rgba(20, 20, 20, 0.98);
     backdrop-filter: blur(20px);
     border-radius: 25px;
-    padding: 40px;
+    padding: 25px;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8);
     border: 2px solid rgba(255, 255, 255, 0.1);
-    width: 90%;
+    width: 95%;
     max-width: 600px;
     z-index: 2500;
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    /* Hide scrollbars */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .youtube-popup.active {
@@ -828,6 +853,142 @@ body {
 }
 
 .current-playing span {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Help Button */
+.help-btn {
+    position: fixed;
+    top: 40px;
+    left: 120px;
+    width: 60px;
+    height: 60px;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
     color: #ffffff;
-    font-weight: 400;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.help-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Shortcuts Popup */
+.shortcuts-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 95%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto; /* Enable scroll but hide scrollbar */
+    background: rgba(25, 25, 25, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Hide scrollbars completely */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.shortcuts-popup::-webkit-scrollbar {
+    display: none; /* WebKit */
+}
+
+.shortcuts-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.shortcuts-popup h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.shortcut-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.shortcut-item .key {
+    min-width: 80px;
+    padding: 8px 12px;
+    background: linear-gradient(145deg, #404040, #2a2a2a);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #fff;
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.shortcut-item .description {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.shortcuts-note {
+    padding: 20px;
+    background: rgba(74, 144, 226, 0.1);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.shortcuts-note p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
 } 

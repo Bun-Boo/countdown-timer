@@ -11,6 +11,9 @@
     <!-- Settings Button -->
     <button class="settings-btn" id="settings-btn">⚙️</button>
 
+    <!-- Help/Shortcuts Button -->
+    <button class="help-btn" id="help-btn">❓</button>
+
     <!-- Ambient Sound Controls -->
     <div class="ambient-controls">
         <button class="ambient-btn" id="rain-btn" data-sound="rain">
@@ -163,6 +166,71 @@
             <label for="volume">Âm lượng thông báo:</label>
             <input type="range" id="volume" min="0" max="100" value="50">
             <span id="volume-value">50%</span>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Popup -->
+    <div class="shortcuts-popup" id="shortcuts-popup">
+        <button class="close-btn" id="shortcuts-close-btn">×</button>
+        
+        <div class="popup-content">
+            <h3>⌨️ Phím tắt</h3>
+            
+            <div class="shortcuts-grid">
+                <div class="shortcut-item">
+                    <div class="key">Space</div>
+                    <div class="description">Bắt đầu / Tạm dừng timer</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">R</div>
+                    <div class="description">Đặt lại timer</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">S</div>
+                    <div class="description">Bỏ qua phiên hiện tại</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">C</div>
+                    <div class="description">Mở cài đặt / điều khiển</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">H</div>
+                    <div class="description">Hiển thị phím tắt này</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">M</div>
+                    <div class="description">Bật/tắt nhạc Lofi</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">F</div>
+                    <div class="description">Chế độ toàn màn hình</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">1-5</div>
+                    <div class="description">Bật/tắt âm thanh môi trường</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">Escape</div>
+                    <div class="description">Đóng popup / Thoát toàn màn hình</div>
+                </div>
+                
+                <div class="shortcut-item">
+                    <div class="key">Double Click</div>
+                    <div class="description">Bật/tắt toàn màn hình</div>
+                </div>
+            </div>
+            
+            <div class="shortcuts-note">
+                <p>💡 <strong>Mẹo:</strong> Các phím tắt hoạt động ngay cả khi popup đang mở!</p>
+            </div>
         </div>
     </div>
 
